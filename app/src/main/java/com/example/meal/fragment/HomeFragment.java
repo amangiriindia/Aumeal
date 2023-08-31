@@ -24,7 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,9 +65,10 @@ public class HomeFragment extends Fragment {
           dailyItemModelList = new ArrayList<>();
           dailyItemAdapter= new DailyItemAdapter(getContext(), dailyItemModelList);
           recyclerView.setAdapter(dailyItemAdapter);
-
-// Fetch data from Firestore
-          firestore.collection("monday")
+          String  currentday =getCurrentDay().toLowerCase();
+          Toast.makeText(getActivity(), ""+currentday, Toast.LENGTH_SHORT).show();
+         // Fetch data from Firestore
+          firestore.collection(currentday)
                   .get()
                   .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                       @Override
@@ -86,7 +89,7 @@ public class HomeFragment extends Fragment {
                           dailyItemAdapter.notifyDataSetChanged();
 
                           // Display a toast or perform other actions as needed
-                          Toast.makeText(getActivity(), "Data loaded successfully", Toast.LENGTH_SHORT).show();
+                         // Toast.makeText(getActivity(), "Data loaded successfully", Toast.LENGTH_SHORT).show();
                       }
                   })
                   .addOnFailureListener(new OnFailureListener() {
@@ -128,6 +131,12 @@ public class HomeFragment extends Fragment {
             }
         }, DELAY_MS, PERIOD_MS);
     }
+    public static String getCurrentDay() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE");
+        return dateFormat.format(calendar.getTime());
+    }
+
 
     @Override
     public void onDestroy() {
