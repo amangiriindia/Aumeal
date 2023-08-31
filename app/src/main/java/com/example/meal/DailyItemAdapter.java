@@ -6,51 +6,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+
+import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 public class DailyItemAdapter extends RecyclerView.Adapter<DailyItemAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<DailyItemModel> itemModelArrayList;
-    public DailyItemAdapter(Context context, ArrayList<DailyItemModel> itemModelArrayList) {
-        this.context =context;
-        this.itemModelArrayList =itemModelArrayList;
+    private Context context;
+    private List<DailyItemModel> itemModelList;
+
+    public DailyItemAdapter(Context context, List<DailyItemModel> itemModelList) {
+        this.context = context;
+        this.itemModelList = itemModelList;
     }
+
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.list_items,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.list_items, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DailyItemModel item = itemModelArrayList.get(position);
-        holder.text.setText(item.text);
-        holder.heading.setText(item.heading);
-       // holder.imageView.setImageResource(item.img_url);
+        DailyItemModel item = itemModelList.get(position);
+        holder.text.setText(item.getText());
+        holder.heading.setText(item.getHeading());
+
+        // Load image using Glide or any other image loading library
+        Glide.with(context).load(item.getImg_url()).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return itemModelArrayList.size();
+        return itemModelList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView heading;
         TextView text;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView =itemView.findViewById(R.id.imageView);
-            heading =itemView.findViewById(R.id.headingTextView);
-            text =itemView.findViewById(R.id.descriptionTextView);
+            imageView = itemView.findViewById(R.id.imageView);
+            heading = itemView.findViewById(R.id.headingTextView);
+            text = itemView.findViewById(R.id.descriptionTextView);
         }
     }
-
 }

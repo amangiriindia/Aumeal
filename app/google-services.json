@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "790319999913",
+    "project_id": "aumeal-d4b0b",
+    "storage_bucket": "aumeal-d4b0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790319999913:android:500ff4557ba66c566932b8",
+        "android_client_info": {
+          "package_name": "com.example.aumeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790319999913-kd4fkj0ofs24sdmdtkjqib3631d0gmfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8YBlpujORbZg7pcPnR3HQiBU_8JzAbIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790319999913-kd4fkj0ofs24sdmdtkjqib3631d0gmfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790319999913:android:4e9d9099e442ebd36932b8",
+        "android_client_info": {
+          "package_name": "com.example.meal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790319999913-kd4fkj0ofs24sdmdtkjqib3631d0gmfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8YBlpujORbZg7pcPnR3HQiBU_8JzAbIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790319999913-kd4fkj0ofs24sdmdtkjqib3631d0gmfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

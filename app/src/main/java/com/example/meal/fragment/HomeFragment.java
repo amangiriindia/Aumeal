@@ -2,10 +2,13 @@ package com.example.meal.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +18,11 @@ import com.example.meal.DailyItemAdapter;
 import com.example.meal.DailyItemModel;
 import com.example.meal.ImageSliderAdapter;
 import com.example.meal.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +38,15 @@ public class HomeFragment extends Fragment {
     private final long PERIOD_MS = 3000;
 
     RecyclerView recyclerView;
-    List<DailyItemModel> itemModelList;
-    DailyItemAdapter myAdapter;
-   // private FirebaseFirestore firestore;
+    List<DailyItemModel> dailyItemModelList;
+    DailyItemAdapter dailyItemAdapter;
+    private FirebaseFirestore firestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-     //   firestore = FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         viewPager2 = rootView.findViewById(R.id.imageSliderViewPager);
         imageSliderAdapter = new ImageSliderAdapter();
@@ -46,27 +54,56 @@ public class HomeFragment extends Fragment {
 
         startAutoSlide();
 
-        recyclerView = rootView.findViewById(R.id.recyclerView);  // Make sure to add the correct ID for your RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        itemModelList = new ArrayList<>();
-        myAdapter = new DailyItemAdapter( getContext(), (ArrayList<DailyItemModel>) itemModelList);
-        recyclerView.setAdapter(myAdapter);
-//
-//        firestore.collection("monday")
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        QuerySnapshot querySnapshot = task.getResult();
-//                        for (QueryDocumentSnapshot document : querySnapshot) {
-//                            itemModel item = document.toObject(itemModel.class);
-//                            itemModelList.add(item);
-//                        }
-//                        myAdapter.notifyDataSetChanged();  // Move this line outside the loop
-//                    } else {
-//                        // Handle the task failure
-//                        Toast.makeText(getActivity(), "Restart or Please Wait...", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+
+
+      try {
+          // Initialize RecyclerView and set its layout manager and adapter
+          recyclerView = rootView.findViewById(R.id.recyclerView);
+          recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+          dailyItemModelList = new ArrayList<>();
+          dailyItemAdapter= new DailyItemAdapter(getContext(), dailyItemModelList);
+          recyclerView.setAdapter(dailyItemAdapter);
+
+// Fetch data from Firestore
+          firestore.collection("monday")
+                  .get()
+                  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                      @Override
+                      public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                          // Clear the existing list before adding new items
+                          dailyItemModelList.clear();
+
+                          // Loop through the query snapshot and add items to the list
+                          for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                              // Convert the document data to your model class
+                              DailyItemModel dailyItemModel = document.toObject(DailyItemModel.class);
+
+                              // Add the model to the list
+                              dailyItemModelList.add(dailyItemModel);
+                          }
+
+                          // Notify the adapter about the changes
+                          dailyItemAdapter.notifyDataSetChanged();
+
+                          // Display a toast or perform other actions as needed
+                          Toast.makeText(getActivity(), "Data loaded successfully", Toast.LENGTH_SHORT).show();
+                      }
+                  })
+                  .addOnFailureListener(new OnFailureListener() {
+                      @Override
+                      public void onFailure(@NonNull Exception e) {
+                          // Handle the failure case
+                          Toast.makeText(getActivity(), "Failed to load data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                      }
+                  });
+
+
+
+      }catch (Exception e){
+          Log.e( "Aman",e.toString());
+      }
+
+
 
         return rootView;
     }

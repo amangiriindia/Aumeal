@@ -3,9 +3,12 @@ package com.example.meal;
 public class DailyItemModel {
     String heading;
     String text;
-    int img_url;
+    String img_url;
 
-    public DailyItemModel(String heading, String text, int img_url) {
+    public DailyItemModel() {
+    }
+
+    public DailyItemModel(String heading, String text, String img_url) {
         this.heading = heading;
         this.text = text;
         this.img_url = img_url;
@@ -27,11 +30,11 @@ public class DailyItemModel {
         this.text = text;
     }
 
-    public int getImg_url() {
+    public String getImg_url() {
         return img_url;
     }
 
-    public void setImg_url(int img_url) {
+    public void setImg_url(String img_url) {
         this.img_url = img_url;
     }
 }
