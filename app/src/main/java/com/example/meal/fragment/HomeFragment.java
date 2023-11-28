@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.meal.DailyItemAdapter;
-import com.example.meal.DailyItemModel;
-import com.example.meal.ImageSliderAdapter;
+import com.example.meal.adapter.DailyItemAdapter;
+import com.example.meal.model.DailyItemModel;
+import com.example.meal.adapter.ImageSliderAdapter;
 import com.example.meal.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
           dailyItemAdapter= new DailyItemAdapter(getContext(), dailyItemModelList);
           recyclerView.setAdapter(dailyItemAdapter);
           String  currentday =getCurrentDay().toLowerCase();
-          Toast.makeText(getActivity(), ""+currentday, Toast.LENGTH_SHORT).show();
+       //   Toast.makeText(getActivity(), ""+currentday, Toast.LENGTH_SHORT).show();
          // Fetch data from Firestore
           firestore.collection(currentday)
                   .get()

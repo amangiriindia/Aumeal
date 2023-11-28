@@ -1,4 +1,4 @@
-package com.example.meal;
+package com.example.meal.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.example.meal.model.DailyItemModel;
+import com.example.meal.R;
 
 import java.util.List;
 

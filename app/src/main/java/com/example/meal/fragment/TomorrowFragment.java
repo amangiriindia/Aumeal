@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.meal.DailyItemAdapter;
-import com.example.meal.DailyItemModel;
+import com.example.meal.adapter.DailyItemAdapter;
+import com.example.meal.model.DailyItemModel;
 import com.example.meal.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +46,7 @@ public class TomorrowFragment extends Fragment {
         recyclerView.setAdapter(dailyItemAdapter);
 
         String nextday =getNextDay().toLowerCase();
-        Toast.makeText(getActivity(), ""+nextday, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), ""+nextday, Toast.LENGTH_SHORT).show();
 
         // Fetch data from Firestore
         firestore.collection(nextday) // Adjust the collection name
